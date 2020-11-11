@@ -1,14 +1,14 @@
-"C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\main.c"
+"C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_flash.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -MD
 -MF
-C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\TankTemp (1)\Obj\main.pbi.dep
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\TankTemp (1)\Obj\stm32g0xx_hal_flash.pbi.dep
 -o
-main.pbi
+stm32g0xx_hal_flash.pbi
 -I
-C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Drivers\STM32G0xx_HAL_Driver\Src
 -I
 C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM/../Inc
 -I

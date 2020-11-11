@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "C:\Users\StevensUser\Desktop\TankTemp\EWARM\settings\TankTemp (1).TankTemp_(1).general.xcl" --backend -f "C:\Users\StevensUser\Desktop\TankTemp\EWARM\settings\TankTemp (1).TankTemp_(1).driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\settings\TankTemp (1).TankTemp_(1).general.xcl" --backend -f "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\settings\TankTemp (1).TankTemp_(1).driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "C:\Users\StevensUser\Desktop\TankTemp\EWARM\settings\TankTemp (1).TankTemp_(1).general.xcl" "--debug_file=%~1" --backend -f "C:\Users\StevensUser\Desktop\TankTemp\EWARM\settings\TankTemp (1).TankTemp_(1).driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\settings\TankTemp (1).TankTemp_(1).general.xcl" "--debug_file=%~1" --backend -f "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\settings\TankTemp (1).TankTemp_(1).driver.xcl" 
 
 @echo off 
 :end

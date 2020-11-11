@@ -51,7 +51,8 @@
         <Category>_ 0</Category>
     </LogFile>
     <Aliases>
-        <Count>0</Count>
+        <A0>_ "C:\Users\StevensUser\Desktop\TankTemp\Src\main.c" "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\main.c"</A0>
+        <Count>1</Count>
         <SuppressDialog>0</SuppressDialog>
     </Aliases>
     <CallStackLog>
