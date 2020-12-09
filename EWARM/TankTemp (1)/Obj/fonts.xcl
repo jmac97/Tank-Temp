@@ -1,38 +1,38 @@
-"C:\Users\StevensUser\Desktop\TankTemp\Src\SSD1306\oled\Src\fonts.c"
+"C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\SSD1306\oled\Src\fonts.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -MD
 -MF
-C:\Users\StevensUser\Desktop\TankTemp\EWARM\TankTemp (1)\Obj\fonts.pbi.dep
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM\TankTemp (1)\Obj\fonts.pbi.dep
 -o
 fonts.pbi
 -I
-C:\Users\StevensUser\Desktop\TankTemp\Src\SSD1306\oled\Src
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\SSD1306\oled\Src
 -I
-C:\Users\StevensUser\Desktop\TankTemp\EWARM/../Inc
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM/../Inc
 -I
-C:\Users\StevensUser\Desktop\TankTemp\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc
 -I
-C:\Users\StevensUser\Desktop\TankTemp\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\StevensUser\Desktop\TankTemp\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include
 -I
-C:\Users\StevensUser\Desktop\TankTemp\EWARM/../Drivers/CMSIS/Include
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\EWARM/../Drivers/CMSIS/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\inc\c
 -I
-C:\Users\StevensUser\Desktop\TankTemp\Inc
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Inc
 -I
-C:\Users\StevensUser\Desktop\TankTemp\Drivers\STM32G0xx_HAL_Driver\Inc
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Drivers\STM32G0xx_HAL_Driver\Inc
 -I
-C:\Users\StevensUser\Desktop\TankTemp\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\StevensUser\Desktop\TankTemp\Drivers\CMSIS\Device\ST\STM32G0xx\Include
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Drivers\CMSIS\Device\ST\STM32G0xx\Include
 -I
-C:\Users\StevensUser\Desktop\TankTemp\Drivers\CMSIS\Include
+C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Drivers\CMSIS\Include
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

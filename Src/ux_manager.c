@@ -2,10 +2,9 @@
 #include "ux_manager.h"
 #include <stdio.h>
 
-#define UP 0x7
-#define ENTER 0xB
-#define DOWN 0xD
-#define TEST 0xE
+#define UP 0x01
+#define ENTER 0x02
+#define DOWN 0x03
 
 screen currentScreen;
 screen lastScreen;
@@ -89,16 +88,35 @@ uint8_t GetButtonVal(void)
 {
   uint8_t bVal = 0x0;
   
-  bVal += HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6);
+  if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)) {
+    bVal = UP;
+  } else if (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)) {
+    bVal = ENTER;
+  } else if (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)) {
+    bVal = DOWN;
+  } else {
+    bVal = 0;
+  }
+  /*
+  bVal += HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
   bVal = bVal << 1;
-  
-  bVal += HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
+
+  bVal += HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
   bVal = bVal << 1;
   
   bVal += HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
   bVal = bVal << 1;
   
-  bVal += HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
+  bVal +=  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
+  bVal = bVal << 1;
+*/
+  
+  if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)) {
+    //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+  } else {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+  }
+    
   
   return bVal; 
 }
@@ -109,14 +127,13 @@ uint8_t ProcessKeyCode(uint16_t key_code)
   case HOME:
     switch (key_code) {
     case UP:
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
       SwitchScreens(MAX_TEMP);
       break;
     case ENTER:
       break;
     case DOWN:
       SwitchScreens(MIN_TEMP);
-      break;
-    case TEST:
       break;
     }
   break;
@@ -130,8 +147,6 @@ uint8_t ProcessKeyCode(uint16_t key_code)
       break;
     case DOWN:
       SwitchScreens(MAX_TEMP);
-      break;
-    case TEST:
       break;
     }
   break;
@@ -158,8 +173,6 @@ uint8_t ProcessKeyCode(uint16_t key_code)
       break;
     case DOWN:
       SwitchScreens(HOME);
-      break;
-    case TEST:
       break;
     }
   break;

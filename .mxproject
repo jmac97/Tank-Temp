@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/StevensUser/Desktop/TankTemp/Inc
+HeaderPath=C:/Users/StevensUser/Documents/GitHub/Tank-Temp/Inc
 HeaderFiles=stm32g0xx_it.h;stm32g0xx_hal_conf.h;main.h;
-SourcePath=C:/Users/StevensUser/Desktop/TankTemp/Src
+SourcePath=C:/Users/StevensUser/Documents/GitHub/Tank-Temp/Src
 SourceFiles=stm32g0xx_it.c;stm32g0xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
