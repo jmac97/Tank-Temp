@@ -20,7 +20,9 @@ typedef struct SFloat
   float data;
 } sFloat;
 
-extern sFloat count;
+extern sFloat minTemp;
+extern sFloat maxTemp;
+extern sFloat tempInF;
 
 uint8_t GetButtonVal(void);
 uint8_t ProcessKeyCode(uint16_t key_code);

@@ -27,6 +27,7 @@
 #include "SSD1306\oled\inc\fonts.h"
 #include "SSD1306\oled\inc\ssd1306.h"
 #include "ux_manager.h"
+#include "thermistor.h"
 
 
 /* USER CODE END Includes */
@@ -54,6 +55,7 @@ I2C_HandleTypeDef hi2c1;
 
 /* USER CODE BEGIN PV */
 // flags
+extern uint8_t oneMSFlag;
 extern uint8_t fiveMSFlag;
 extern uint8_t tenMSFlag;
 extern uint8_t fiftyMSFlag;
@@ -64,6 +66,39 @@ uint8_t buttonDebounced = false;
 uint8_t buttonProcessed = false;
 uint8_t keyCode = 0x0;
 int volatile counter = 0;
+
+// temp stuff
+uint16_t thermCounts;
+int16_t tempC = 0;
+int16_t tempF = 0;
+
+// memory 
+typedef union _temp_settings {
+  uint8_t Array[4];
+  struct settingsStruct {
+    uint8_t minTemp;
+    uint8_t maxTemp;
+    uint8_t dummy;
+  } settingsData;
+} settings;
+
+typedef union _my_union {
+  uint8_t Array[6];
+  struct _myStruct {
+    uint16_t tcCal;
+    int16_t cjCal;
+    uint8_t valid;
+    uint8_t dummy;
+  } calData;
+} cal_constants;
+cal_constants myCalibration;
+
+#define EEPROM_ADDR 0xA0
+uint8_t memTxData[4] = {0,0,0,0};
+uint8_t memRxData[4] = {0,0,0,0};
+HAL_StatusTypeDef i2cResult = HAL_OK;
+
+settings userSettings;
 
 
 /* USER CODE END PV */
@@ -117,35 +152,76 @@ int main(void)
   SSD1306_Init();
   SwitchScreens(HOME);
   HAL_Delay (1000);
+  
+  myCalibration.calData.cjCal = 23;
+  myCalibration.calData.tcCal = -137;
+  myCalibration.calData.valid = true;
+ 
+ i2cResult = HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, myCalibration.Array, 6, 1000);
+ 
+ i2cResult = HAL_I2C_Mem_Read(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, memRxData, 4, 1000);
+  
+  userSettings.settingsData.minTemp = 76;
+  userSettings.settingsData.maxTemp = 80;
+  
+  memTxData[0] = 3;
+  memTxData[1] = 2;
+  memTxData[2] = 1;
+  memTxData[3] = 0;
+  
+  i2cResult = HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, memTxData, 4, 1000);
+  
+  HAL_Delay(500);
+  
+  memRxData[0] = 0xFF;
+  memRxData[1] = 0xFF;
+  memRxData[2] = 0xFF;
+  memRxData[3] = 0xFF;
+   
+  i2cResult = HAL_I2C_Mem_Read(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, memRxData, 4, 1000);
+  
+  
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-   
-    if (fiftyMSFlag) {
-      fiftyMSFlag = false;
+  {    
+    if (hundredMSFlag) {
+      hundredMSFlag = false;
+      HAL_ADC_Start_IT(&hadc1);
       
       keyCode = GetButtonVal();
       if(BUTTON_PRESSED) {
         if (buttonDebounced == true) {
-          //if (buttonProcessed == false) { 
             buttonProcessed = ProcessKeyCode(keyCode);
           }
-        //}
         else {
           buttonDebounced = true;
         }
       }
       else {
           buttonDebounced = false;
-          buttonProcessed = false;
       }
     }
     
-    UpdateScreen();
+    if (oneMSFlag) {
+      oneMSFlag = false;
+      
+      tempC = ThermTemp(thermCounts);
+      tempF = C2F(tempC);
+      tempInF.data = tempF;
+      
+      if ((tempF >= maxTemp.data) || (tempF <= minTemp.data)) {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+      } else {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+      }
+      
+      UpdateScreen();
+    }
+    
   
     /* USER CODE END WHILE */
 
@@ -169,11 +245,10 @@ void SystemClock_Config(void)
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -200,7 +275,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  HAL_RCCEx_EnableLSCO(RCC_LSCOSOURCE_LSI);
 }
 
 /**
@@ -255,7 +329,7 @@ static void MX_ADC1_Init(void)
   }
   /** Configure Regular Channel 
   */
-  sConfig.Channel = ADC_CHANNEL_2;
+  sConfig.Channel = ADC_CHANNEL_9;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -339,12 +413,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA6 */
   GPIO_InitStruct.Pin = GPIO_PIN_6;

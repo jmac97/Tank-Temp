@@ -1,4 +1,5 @@
 main.pbi: \
+  C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\thermistor.h \
   C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\ux_manager.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\DLib_Product_stdlib.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\ycheck.h \

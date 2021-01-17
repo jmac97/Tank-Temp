@@ -25,6 +25,7 @@ build ssd1306.pbi : index ssd1306.xcl
 build main.pbi : index main.xcl
 build stm32g0xx_hal_msp.pbi : index stm32g0xx_hal_msp.xcl
 build stm32g0xx_it.pbi : index stm32g0xx_it.xcl
+build thermistor.pbi : index thermistor.xcl
 build ux_manager.pbi : index ux_manager.xcl
 build system_stm32g0xx.pbi : index system_stm32g0xx.xcl
 build stm32g0xx_hal.pbi : index stm32g0xx_hal.xcl
@@ -48,11 +49,11 @@ build stm32g0xx_hal_tim_ex.pbi : index stm32g0xx_hal_tim_ex.xcl
 build stm32g0xx_ll_adc.pbi : index stm32g0xx_ll_adc.xcl
 build stm32g0xx_ll_rcc.pbi : index stm32g0xx_ll_rcc.xcl
 build TankTemp$ (1)_part0.pbi : link fonts.pbi ssd1306.pbi main.pbi stm32g0xx_hal_msp.pbi stm32g0xx_it.pbi
-build TankTemp$ (1)_part1.pbi : link ux_manager.pbi system_stm32g0xx.pbi stm32g0xx_hal.pbi stm32g0xx_hal_adc.pbi stm32g0xx_hal_adc_ex.pbi
-build TankTemp$ (1)_part2.pbi : link stm32g0xx_hal_cortex.pbi stm32g0xx_hal_dma.pbi stm32g0xx_hal_dma_ex.pbi stm32g0xx_hal_exti.pbi stm32g0xx_hal_flash.pbi
-build TankTemp$ (1)_part3.pbi : link stm32g0xx_hal_flash_ex.pbi stm32g0xx_hal_gpio.pbi stm32g0xx_hal_i2c.pbi stm32g0xx_hal_i2c_ex.pbi stm32g0xx_hal_pwr.pbi
-build TankTemp$ (1)_part4.pbi : link stm32g0xx_hal_pwr_ex.pbi stm32g0xx_hal_rcc.pbi stm32g0xx_hal_rcc_ex.pbi stm32g0xx_hal_tim.pbi stm32g0xx_hal_tim_ex.pbi
-build TankTemp$ (1)_part5.pbi : link stm32g0xx_ll_adc.pbi stm32g0xx_ll_rcc.pbi
+build TankTemp$ (1)_part1.pbi : link thermistor.pbi ux_manager.pbi system_stm32g0xx.pbi stm32g0xx_hal.pbi stm32g0xx_hal_adc.pbi
+build TankTemp$ (1)_part2.pbi : link stm32g0xx_hal_adc_ex.pbi stm32g0xx_hal_cortex.pbi stm32g0xx_hal_dma.pbi stm32g0xx_hal_dma_ex.pbi stm32g0xx_hal_exti.pbi
+build TankTemp$ (1)_part3.pbi : link stm32g0xx_hal_flash.pbi stm32g0xx_hal_flash_ex.pbi stm32g0xx_hal_gpio.pbi stm32g0xx_hal_i2c.pbi stm32g0xx_hal_i2c_ex.pbi
+build TankTemp$ (1)_part4.pbi : link stm32g0xx_hal_pwr.pbi stm32g0xx_hal_pwr_ex.pbi stm32g0xx_hal_rcc.pbi stm32g0xx_hal_rcc_ex.pbi stm32g0xx_hal_tim.pbi
+build TankTemp$ (1)_part5.pbi : link stm32g0xx_hal_tim_ex.pbi stm32g0xx_ll_adc.pbi stm32g0xx_ll_rcc.pbi
 build TankTemp$ (1).pbd : link TankTemp$ (1)_part0.pbi TankTemp$ (1)_part1.pbi TankTemp$ (1)_part2.pbi TankTemp$ (1)_part3.pbi TankTemp$ (1)_part4.pbi TankTemp$ (1)_part5.pbi
 build TankTemp$ (1).pbw : browsedata TankTemp$ (1).pbd
 

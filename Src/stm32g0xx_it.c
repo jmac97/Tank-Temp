@@ -42,11 +42,15 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+#define ONE_MS       1
 #define FIVE_MS      5
 #define TEN_MS       10
 #define FIFTY_MS     50
 #define HUNDRED_MS   100
 #define ONE_S        1000  
+
+uint16_t oneMSCounter = ONE_MS;
+uint8_t oneMSFlag = false;
 
 uint16_t fiveMSCounter = FIVE_MS;
 uint8_t fiveMSFlag = false;
@@ -63,6 +67,8 @@ uint8_t hundredMSFlag = false;
 uint16_t oneSCounter = ONE_S;
 uint8_t oneSFlag = false;
 
+extern uint16_t thermCounts;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -76,7 +82,7 @@ uint8_t oneSFlag = false;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
+extern ADC_HandleTypeDef hadc1;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -148,6 +154,12 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
+  oneMSCounter--;
+  if(oneMSCounter == 0) {
+    oneMSFlag = true;
+    oneMSCounter = ONE_MS;
+  }
+  
   fiveMSCounter--;
   if(fiveMSCounter == 0) {
     fiveMSFlag = true;
@@ -187,6 +199,20 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32g0xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles ADC1 interrupt.
+  */
+void ADC1_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_IRQn 0 */
+  thermCounts = HAL_ADC_GetValue(&hadc1);
+  /* USER CODE END ADC1_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_IRQn 1 */
+
+  /* USER CODE END ADC1_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

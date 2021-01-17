@@ -8,7 +8,9 @@
 
 screen currentScreen;
 screen lastScreen;
-sFloat count = {"%3.0f", "----", 52, 30, true, 0};
+sFloat minTemp = {"%3.0f", "----", 45, 30, true, 0};
+sFloat maxTemp = {"%3.0f", "----", 45, 30, true, 0};
+sFloat tempInF = {"%3.0f", "----", 45, 30, true, 0};
 
 void UpdateScreen(void)
 {
@@ -17,19 +19,22 @@ void UpdateScreen(void)
   switch(currentScreen)
   {
   case HOME:
+    SSD1306_GotoXY (tempInF.xPos, tempInF.yPos);
+    sprintf(displayString, tempInF.format, tempInF.data);
+    SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     break;
   case MIN_TEMP:
     break;
   case MIN_SET:
-    SSD1306_GotoXY (count.xPos, count.yPos);
-    sprintf(displayString, count.format, count.data);
+    SSD1306_GotoXY (minTemp.xPos, minTemp.yPos);
+    sprintf(displayString, minTemp.format, minTemp.data);
     SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     break;
   case MAX_TEMP:
     break;
   case MAX_SET:
-    SSD1306_GotoXY (count.xPos, count.yPos);
-    sprintf(displayString, count.format, count.data);
+    SSD1306_GotoXY (maxTemp.xPos, maxTemp.yPos);
+    sprintf(displayString, maxTemp.format, maxTemp.data);
     SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     break;
   }
@@ -39,44 +44,52 @@ void UpdateScreen(void)
 void SwitchScreens(screen screenNum) 
 {
   lastScreen = currentScreen;
+  char displayString[25];
   
   switch (screenNum){
   case HOME:
     SSD1306_Clear();
-    SSD1306_GotoXY (42,0);
-    SSD1306_Puts ("Home", &Font_11x18, SSD1306_COLOR_WHITE);
-    SSD1306_GotoXY (52, 30);
-    SSD1306_Puts ("XX", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (5,0);
+    SSD1306_Puts ("TEMPERATURE", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (tempInF.xPos, tempInF.yPos);
+    sprintf(displayString, tempInF.format, tempInF.data);
+    SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     SSD1306_UpdateScreen();
     break;
   case MIN_TEMP:
     SSD1306_Clear();
-    SSD1306_GotoXY (42,0);
-    SSD1306_Puts ("Min", &Font_11x18, SSD1306_COLOR_WHITE);
-    SSD1306_GotoXY (52, 30);
-    SSD1306_Puts ("XX", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (23,0);
+    SSD1306_Puts ("MIN TEMP", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (minTemp.xPos, minTemp.yPos);
+    sprintf(displayString, minTemp.format, minTemp.data);
+    SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     SSD1306_UpdateScreen();
     break;
   case MAX_TEMP:
     SSD1306_Clear();
-    SSD1306_GotoXY (42,0);
-    SSD1306_Puts ("Max", &Font_11x18, SSD1306_COLOR_WHITE);
-    SSD1306_GotoXY (52, 30);
-    SSD1306_Puts ("XX", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (23,0);
+    SSD1306_Puts ("MAX TEMP", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (maxTemp.xPos, maxTemp.yPos);
+    sprintf(displayString, maxTemp.format, maxTemp.data);
+    SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     SSD1306_UpdateScreen();
     break;
   case MIN_SET:
     SSD1306_Clear();
-    SSD1306_GotoXY (0,0);
-    SSD1306_Puts ("Min Set", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (27,0);
+    SSD1306_Puts ("SET MIN", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (minTemp.xPos, minTemp.yPos);
+    sprintf(displayString, minTemp.format, minTemp.data);
+    SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     UpdateScreen();
     break;
   case MAX_SET:
     SSD1306_Clear();
-    SSD1306_GotoXY (0,0);
-    SSD1306_Puts ("Max Set", &Font_11x18, SSD1306_COLOR_WHITE);
-    SSD1306_GotoXY (52, 30);
-    SSD1306_Puts ("XX", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (27,0);
+    SSD1306_Puts ("SET MAX", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (maxTemp.xPos, maxTemp.yPos);
+    sprintf(displayString, maxTemp.format, maxTemp.data);
+    SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     SSD1306_UpdateScreen();
     break;
   }
@@ -97,26 +110,6 @@ uint8_t GetButtonVal(void)
   } else {
     bVal = 0;
   }
-  /*
-  bVal += HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
-  bVal = bVal << 1;
-
-  bVal += HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
-  bVal = bVal << 1;
-  
-  bVal += HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
-  bVal = bVal << 1;
-  
-  bVal +=  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
-  bVal = bVal << 1;
-*/
-  
-  if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)) {
-    //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
-  } else {
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-  }
-    
   
   return bVal; 
 }
@@ -153,13 +146,13 @@ uint8_t ProcessKeyCode(uint16_t key_code)
   case MIN_SET:
     switch (key_code) {
     case UP:
-      count.data++;
+      minTemp.data++;
       break;
     case ENTER:
       SwitchScreens(MIN_TEMP);
       break;
     case DOWN:
-      count.data--;
+      minTemp.data--;
       break;
     }
   break;
@@ -179,13 +172,13 @@ uint8_t ProcessKeyCode(uint16_t key_code)
   case MAX_SET:
     switch (key_code) {
     case UP:
-      count.data++;
+      maxTemp.data++;
       break;
     case ENTER:
       SwitchScreens(MAX_TEMP);
       break;
     case DOWN:
-      count.data--;
+      maxTemp.data--;
       break;
     }
   break;
