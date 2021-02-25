@@ -50,6 +50,7 @@ extern "C" {
 /* USER CODE BEGIN EM */
 #define true 1
 #define false 0
+#define EEPROM_ADDR 0xA0
 
 /* USER CODE END EM */
 

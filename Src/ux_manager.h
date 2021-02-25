@@ -20,9 +20,24 @@ typedef struct SFloat
   float data;
 } sFloat;
 
+// memory 
+typedef union _temp_settings {
+  uint8_t Array[3];
+  struct settingsStruct {
+    uint8_t minTemp;
+    uint8_t maxTemp;
+    uint8_t dummy;
+  } settingsData;
+} settings;
+
 extern sFloat minTemp;
 extern sFloat maxTemp;
 extern sFloat tempInF;
+
+extern I2C_HandleTypeDef hi2c1;
+extern HAL_StatusTypeDef i2cResult;
+
+extern settings userSettings;
 
 uint8_t GetButtonVal(void);
 uint8_t ProcessKeyCode(uint16_t key_code);

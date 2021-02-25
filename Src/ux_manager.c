@@ -6,6 +6,12 @@
 #define ENTER 0x02
 #define DOWN 0x03
 
+float lastMax = 0;
+float lastMin = 0;
+
+extern uint8_t tenMSFlag;
+extern uint8_t buttonDebounced;
+
 screen currentScreen;
 screen lastScreen;
 sFloat minTemp = {"%3.0f", "----", 45, 30, true, 0};
@@ -63,6 +69,13 @@ void SwitchScreens(screen screenNum)
     SSD1306_GotoXY (minTemp.xPos, minTemp.yPos);
     sprintf(displayString, minTemp.format, minTemp.data);
     SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
+    
+    if (minTemp.data != lastMin) {
+      userSettings.Array[0] = minTemp.data;
+  i2cResult = HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, userSettings.Array, 3, 1000);
+  lastMin = minTemp.data;
+}
+HAL_Delay(500);
     SSD1306_UpdateScreen();
     break;
   case MAX_TEMP:
@@ -72,6 +85,13 @@ void SwitchScreens(screen screenNum)
     SSD1306_GotoXY (maxTemp.xPos, maxTemp.yPos);
     sprintf(displayString, maxTemp.format, maxTemp.data);
     SSD1306_Puts (displayString, &Font_11x18, SSD1306_COLOR_WHITE);
+
+if (maxTemp.data != lastMax) {
+  userSettings.Array[1] = maxTemp.data;
+  i2cResult = HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, userSettings.Array, 3, 1000);
+  lastMax = maxTemp.data;
+}
+HAL_Delay(500);
     SSD1306_UpdateScreen();
     break;
   case MIN_SET:

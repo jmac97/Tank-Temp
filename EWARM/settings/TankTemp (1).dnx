@@ -3,13 +3,13 @@
     <StLinkDriver>
         <stlinkserialNo>0673FF343339415043144228</stlinkserialNo>
         <stlinkfoundProbes />
-        <CStepIntDis>_ 0</CStepIntDis>
-        <LeaveTargetRunning>_ 0</LeaveTargetRunning>
         <stlinkResetStyle>0</stlinkResetStyle>
         <stlinkResetStrategy>2</stlinkResetStrategy>
+        <CStepIntDis>_ 0</CStepIntDis>
+        <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>1433543591</Checksum>
+        <Checksum>598547193</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -33,14 +33,21 @@
         <MixedMode>1</MixedMode>
     </Disassembly>
     <watch_formats>
-        <Fmt0>{W}42:count	2	0</Fmt0>
+        <Fmt0>{W}42:buttonDebounced	3	0</Fmt0>
+        <Fmt1>{W}42:buttonProcessed	3	0</Fmt1>
+        <Fmt2>{W}42:count	2	0</Fmt2>
+        <Fmt3>{W}42:memRxData[0]	3	0</Fmt3>
+        <Fmt4>{W}42:memRxData[1]	3	0</Fmt4>
+        <Fmt5>{W}42:memRxData[2]	3	0</Fmt5>
+        <Fmt6>{W}42:memRxData[3]	3	0</Fmt6>
+        <Fmt7>{W}42:memRxData[4]	3	0</Fmt7>
+        <Fmt8>{W}42:memTxData[4]	3	0</Fmt8>
+        <Fmt9>{W}42:userSettings.Array[0]	3	0</Fmt9>
+        <Fmt10>{W}42:userSettings.Array[1]	3	0</Fmt10>
+        <Fmt11>{W}42:userSettings.Array[2]	3	0</Fmt11>
+        <Fmt12>{W}42:userSettings.Array[3]	3	0</Fmt12>
+        <Fmt13>{W}42:userSettings.settingsData.minTemp	3	0</Fmt13>
     </watch_formats>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Count>0</Count>
-    </Breakpoints2>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -50,15 +57,21 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
-    <Aliases>
-        <A0>_ "C:\Users\StevensUser\Desktop\TankTemp\Src\main.c" "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\main.c"</A0>
-        <Count>1</Count>
-        <SuppressDialog>0</SuppressDialog>
-    </Aliases>
     <CallStackLog>
         <Enabled>0</Enabled>
     </CallStackLog>
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Count>0</Count>
+    </Breakpoints2>
+    <Aliases>
+        <A0>_ "C:\Users\StevensUser\Desktop\TankTemp\Src\main.c" "C:\Users\StevensUser\Documents\GitHub\Tank-Temp\Src\main.c"</A0>
+        <Count>1</Count>
+        <SuppressDialog>0</SuppressDialog>
+    </Aliases>
 </settings>
